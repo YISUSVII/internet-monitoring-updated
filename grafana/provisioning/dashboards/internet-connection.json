@@ -325,39 +325,39 @@
       "type": "timeseries"
     },
     {
-      "cards": {
-        "cardHSpacing": 2,
-        "cardMinWidth": 5,
-        "cardRound": null,
-        "cardVSpacing": 2
-      },
-      "color": {
-        "cardColor": "#b4ff00",
-        "colorScale": "sqrt",
-        "colorScheme": "interpolateGnYlRd",
-        "defaultColor": "#757575",
-        "exponent": 0.5,
-        "max": 1,
-        "min": 0,
-        "mode": "discrete",
-        "thresholds": [
-          {
-            "$$hashKey": "object:68",
-            "color": "#37872D",
-            "tooltip": "Up",
-            "value": "1"
-          },
-          {
-            "$$hashKey": "object:72",
-            "color": "#C4162A",
-            "tooltip": "Down",
-            "value": "0"
-          }
-        ]
-      },
       "datasource": "prometheus",
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 1,
+                  "text": "Down"
+                },
+                "1": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "Up"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
         "overrides": []
       },
       "gridPos": {
@@ -366,17 +366,21 @@
         "x": 12,
         "y": 9
       },
-      "highlightCards": true,
       "id": 14,
-      "legend": {
-        "show": false
-      },
-      "links": [],
-      "nullPointMode": "as empty",
-      "pageSize": 15,
-      "seriesFilterIndex": -1,
-      "statusmap": {
-        "ConfigVersion": "v1"
+      "options": {
+        "alignValue": "center",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "never",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "targets": [
         {
@@ -389,31 +393,7 @@
         }
       ],
       "title": "Uptime",
-      "tooltip": {
-        "extraInfo": "",
-        "freezeOnClick": true,
-        "items": [],
-        "show": true,
-        "showExtraInfo": false,
-        "showItems": false
-      },
-      "type": "flant-statusmap-panel",
-      "useMax": true,
-      "usingPagination": false,
-      "xAxis": {
-        "show": true
-      },
-      "yAxis": {
-        "maxWidth": -1,
-        "minWidth": -1,
-        "show": true
-      },
-      "yAxisSort": "metrics",
-      "yLabel": {
-        "delimiter": "",
-        "labelTemplate": "",
-        "usingSplitLabel": false
-      }
+      "type": "state-timeline"
     },
     {
       "aliasColors": {},
@@ -465,7 +445,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(probe_http_duration_seconds) by (instance)",
+          "expr": "sum(probe_duration_seconds) by (instance)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{instance}}",

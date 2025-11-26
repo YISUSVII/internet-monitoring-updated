@@ -1,5 +1,3 @@
-version: "3.1"
-
 volumes:
     prometheus_data: {}
     grafana_data: {}
@@ -10,7 +8,7 @@ networks:
 
 services:
   prometheus:
-    image: prom/prometheus:v2.25.2
+    image: prom/prometheus:latest
     restart: always
     volumes:
       - ./prometheus/:/etc/prometheus/
@@ -21,7 +19,7 @@ services:
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
-      - 9090:9090
+      - 9099:9090
     links:
       - ping:ping
       - speedtest:speedtest
@@ -29,7 +27,7 @@ services:
       - back-tier
 
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:latest
     restart: always
     volumes:
       - grafana_data:/var/lib/grafana
@@ -51,7 +49,7 @@ services:
       - 9115
     ports:
       - 9115:9115
-    image: prom/blackbox-exporter
+    image: prom/blackbox-exporter:latest
     restart: always
     volumes:
       - ./blackbox/config:/config
@@ -67,14 +65,14 @@ services:
       - 9798
     ports:
       - 9798:9798
-    image: miguelndecarvalho/speedtest-exporter
+    image: miguelndecarvalho/speedtest-exporter:latest
     restart: always
     networks:
       - back-tier
 
   nodeexp:
     privileged: true
-    image: prom/node-exporter
+    image: prom/node-exporter:latest
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
