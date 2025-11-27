@@ -88,6 +88,23 @@ scrape_configs:
       - target_label: __address__
         replacement: ping:9115
 
+  - job_name: 'dns_query'
+    metrics_path: /probe
+    scrape_interval: 5s
+    params:
+      module: [dns_udp]
+    static_configs:
+      - targets:
+        - 8.8.8.8  # Google DNS
+        - 1.1.1.1  # Cloudflare DNS
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: ping:9115
+
   - job_name: 'nodeexp'
     static_configs:
     - targets: ['nodeexp:9100']
