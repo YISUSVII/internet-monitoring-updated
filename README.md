@@ -2,7 +2,7 @@
 
 > **ARCHIVED**: This repository has been archived. The contents have been merged into my [internet-pi](https://github.com/geerlingguy/internet-pi) repository.
 
-Stand-up a Docker [Prometheus](http://prometheus.io/) stack containing Prometheus, Grafana with [blackbox-exporter](https://github.com/prometheus/blackbox_exporter), and [speedtest-exporter](https://github.com/MiguelNdeCarvalho/speedtest-exporter) to collect and graph home Internet reliability and throughput.
+Stand-up a Docker [Prometheus](http://prometheus.io/) stack containing Prometheus, Grafana with [blackbox-exporter](https://github.com/prometheus/blackbox_exporter), [speedtest-exporter](https://github.com/MiguelNdeCarvalho/speedtest-exporter), and [node-exporter](https://github.com/prometheus/node_exporter) to collect and graph home Internet reliability, throughput, and host system metrics (CPU, memory, disk I/O, network I/O, etc.).
 
 ## Pre-requisites
 
@@ -39,6 +39,11 @@ The DataSource and Dashboard for Grafana are automatically provisioned.
 
 If all works it should be available at http://localhost:3030/d/o9mIe_Aik/internet-connection - if no data shows up try change the timeduration to something smaller.
 
+### Available Dashboards
+
+- **Internet Connection**: http://localhost:3030/d/o9mIe_Aik/internet-connection - Monitor internet reliability and ping statistics
+- **Host System Metrics**: http://localhost:3030/d/host_metrics_001/host-system-metrics - Monitor CPU, memory, disk I/O, network I/O, and system load
+
 <center><img src="images/dashboard.png" width="4600" heighth="500"></center>
 
 ## Interesting urls
@@ -50,6 +55,8 @@ http://localhost:9090/graph?g0.expr=probe_http_status_code&g0.tab=1 shows promet
 http://localhost:9115 blackbox exporter endpoint. Lets you see what have failed/succeded.
 
 http://localhost:9798/metrics speedtest exporter endpoint. Does take about 30 seconds to show its result as it runs an actual speedtest when requested.
+
+http://localhost:9100/metrics node exporter endpoint. Displays all the host system metrics being collected (CPU, memory, disk, network, etc.).
 
 ## Thanks and a disclaimer
 

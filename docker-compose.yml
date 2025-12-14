@@ -23,6 +23,7 @@ services:
     links:
       - ping:ping
       - speedtest:speedtest
+      - nodeexp:nodeexp
     networks:
       - back-tier
 
